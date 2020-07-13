@@ -6,7 +6,7 @@
     android:clickable="true"
     android:background="@color/white">
 
-    <include layout="@layout/toolbar_back" />
+    <include layout="@layout/toolbar_main" />
 
     <ScrollView
         android:layout_width="match_parent"

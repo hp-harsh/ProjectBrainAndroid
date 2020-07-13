@@ -2,9 +2,12 @@ package hp.harsh.projectbrain.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,10 +23,10 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
     private TextView mTxtTitle;
 
-    private LinearLayout lnrBrainIdeas;
-    private LinearLayout lnrBrainTodo;
-    private LinearLayout lnrBrainUpdateProfile;
-    private LinearLayout lnrLogout;
+    private ImageButton imgIdeas;
+    private ImageButton imgTodo;
+    private ImageButton imgUpdateProfile;
+    private ImageButton imgLogout;
 
     public static ProfileFragment getInstance() {
         ProfileFragment frag = new ProfileFragment();
@@ -46,32 +49,40 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     private void init(View view) {
         mTxtTitle = view.findViewById(R.id.txtTitle);
 
-        lnrBrainIdeas = view.findViewById(R.id.lnrBrainIdeas);
-        lnrBrainTodo = view.findViewById(R.id.lnrBrainTodo);
-        lnrBrainUpdateProfile = view.findViewById(R.id.lnrBrainUpdateProfile);
-        lnrLogout = view.findViewById(R.id.lnrLogout);
+        imgIdeas = view.findViewById(R.id.imgIdeas);
+        imgTodo = view.findViewById(R.id.imgTodo);
+        imgUpdateProfile = view.findViewById(R.id.imgUpdateProfile);
+        imgLogout = view.findViewById(R.id.imgLogout);
 
-        lnrBrainIdeas.setOnClickListener(this);
-        lnrBrainTodo.setOnClickListener(this);
-        lnrBrainUpdateProfile.setOnClickListener(this);
-        lnrLogout.setOnClickListener(this);
+        imgIdeas.setOnClickListener(this);
+        imgTodo.setOnClickListener(this);
+        imgUpdateProfile.setOnClickListener(this);
+        imgLogout.setOnClickListener(this);
 
-        mTxtTitle.setText("");
+        mTxtTitle.setText(mResourceUtil.getString(R.string.profile));
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.lnrBrainIdeas:
+            case R.id.imgIdeas:
+                Log.i(TAG, "onClick: " + imgIdeas);
+                addFragment(BrainIdeasFragment.getInstance());
                 break;
 
-            case R.id.lnrBrainTodo:
+            case R.id.imgTodo:
+                addFragment(BrainTodoFragment.getInstance());
                 break;
 
-            case R.id.lnrBrainUpdateProfile:
+            case R.id.imgUpdateProfile:
+                addFragment(BrainUpdateProfileFragment.getInstance());
                 break;
 
-            case R.id.lnrLogout:
+            case R.id.imgLogout:
+                mSharedPrefsHelper.clear();
+
+                startActivity(new Intent(mActivityContext, LoginActivity.class));
+                mActivityContext.finish();
                 break;
         }
     }

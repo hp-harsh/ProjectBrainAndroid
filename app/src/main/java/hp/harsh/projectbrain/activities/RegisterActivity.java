@@ -19,6 +19,7 @@ import hp.harsh.projectbrain.R;
 import hp.harsh.projectbrain.components.DaggerRegisterActivityComponent;
 import hp.harsh.projectbrain.components.RegisterActivityComponent;
 import hp.harsh.projectbrain.models.LoginModel;
+import hp.harsh.projectbrain.models.RegistrationModel;
 import hp.harsh.projectbrain.modules.RegisterActivityModule;
 import hp.harsh.projectbrain.networks.NetworkCallback;
 import hp.harsh.projectbrain.networks.NetworkError;
@@ -92,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 checkValidation();
                 break;
 
-            case R.id.btnRegistration:
+            case R.id.btnLogin:
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                 finish();
                 break;
@@ -144,16 +145,36 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
 
-        /*// Now call web service using retrofit
-        mNetworkService.doUserSignIn(RegisterActivity.this,
-                RequestParam.paramUserLogin("" + mEdtEmail.getText().toString(), "" + mEdtPassword.getText().toString()),
+        // Now call web service using retrofit
+        mNetworkService.doUserRegister(RegisterActivity.this,
+                RequestParam.paramUserRegister("" + edtUsername.getText().toString(),
+                        "" + edtEmail.getText().toString(),
+                        "" + edtPassword.getText().toString(),
+                        "" + edtFirstname.getText().toString(),
+                        "" + edtLastname.getText().toString()),
                 false,
-                this);*/
+                this);
     }
 
     @Override
     public void onSuccess(Object networkResponse) {
-        if (networkResponse instanceof LoginModel) {
+        if (networkResponse instanceof RegistrationModel) {
+
+            RegistrationModel responseModel = (RegistrationModel) networkResponse;
+
+            if (responseModel != null) {
+                Toast.makeText(
+                        RegisterActivity.this,
+                        R.string.success,
+                        Toast.LENGTH_LONG
+                ).show();
+
+                mSharedPrefsHelper.saveLoginData(responseModel.getUsername(),
+                        responseModel.getFirstname(), responseModel.getLastname(), responseModel.getEmail());
+
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                finish();
+            }
 
         } else {
             ToastUtil.show(RegisterActivity.this, mResourceUtil.getString(R.string.toast_something_wrong));

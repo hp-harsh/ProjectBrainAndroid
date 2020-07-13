@@ -15,6 +15,12 @@ import hp.harsh.projectbrain.MyApplication;
 import hp.harsh.projectbrain.R;
 import hp.harsh.projectbrain.components.DaggerHomeActivityComponent;
 import hp.harsh.projectbrain.components.HomeActivityComponent;
+import hp.harsh.projectbrain.fragments.BrainIdeasFragment;
+import hp.harsh.projectbrain.fragments.BrainTodoFragment;
+import hp.harsh.projectbrain.fragments.BrainUpdateProfileFragment;
+import hp.harsh.projectbrain.fragments.IdeasFragment;
+import hp.harsh.projectbrain.fragments.NewIdeaFragment;
+import hp.harsh.projectbrain.fragments.ProfileFragment;
 import hp.harsh.projectbrain.modules.HomeActivityModule;
 import hp.harsh.projectbrain.util.CommonUtil;
 import hp.harsh.projectbrain.util.RxUtil;
@@ -70,17 +76,52 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         imgProfile.setOnClickListener(this);
         imgNewIdea.setOnClickListener(this);
         imgHome.setOnClickListener(this);
+
+        replaceFragment(IdeasFragment.getInstance());
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frameContainer);
+
+        if (fragment instanceof BrainIdeasFragment ||
+                fragment instanceof BrainTodoFragment ||
+                fragment instanceof BrainUpdateProfileFragment) {
+            removeFragment(fragment);
+        } else if (fragment instanceof  IdeasFragment) {
+            // Quit app if user double tap back pressed
+            mRxUtil.quitApp(HomeActivity.this);
+        } else {
+            replaceFragment(IdeasFragment.getInstance());
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imgHome:
+                replaceFragment(IdeasFragment.getInstance());
                 break;
             case R.id.imgNewIdea:
+                replaceFragment(NewIdeaFragment.getInstance());
                 break;
             case R.id.imgProfile:
+                replaceFragment(ProfileFragment.getInstance());
                 break;
         }
+    }
+
+    public void addFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().add(R.id.frameContainer,
+                fragment, fragment.getClass().getSimpleName()).commit();
+    }
+
+    public void replaceFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameContainer,
+                fragment, fragment.getClass().getSimpleName()).commit();
+    }
+
+    public void removeFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().remove(fragment).commit();
     }
 }

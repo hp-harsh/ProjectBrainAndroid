@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,14 +18,17 @@ import androidx.annotation.Nullable;
 import hp.harsh.projectbrain.R;
 import hp.harsh.projectbrain.activities.LoginActivity;
 import hp.harsh.projectbrain.activities.RegisterActivity;
+import hp.harsh.projectbrain.models.RegistrationModel;
+import hp.harsh.projectbrain.models.UpdateProfileModel;
+import hp.harsh.projectbrain.networks.NetworkCallback;
+import hp.harsh.projectbrain.networks.NetworkError;
+import hp.harsh.projectbrain.networks.RequestParam;
 import hp.harsh.projectbrain.util.ToastUtil;
 
-public class BrainUpdateProfileFragment extends BaseFragment implements View.OnClickListener {
+public class BrainUpdateProfileFragment extends BaseFragment implements View.OnClickListener, NetworkCallback {
     private static final String TAG = BrainUpdateProfileFragment.class.getSimpleName();
 
     private TextView mTxtTitle;
-
-    private ImageView imgBack;
 
     private EditText edtUsername;
     private EditText edtEmail;
@@ -54,8 +58,6 @@ public class BrainUpdateProfileFragment extends BaseFragment implements View.OnC
     private void init(View view) {
         mTxtTitle = view.findViewById(R.id.txtTitle);
 
-        imgBack = view.findViewById(R.id.imgBack);
-
         edtUsername = view.findViewById(R.id.edtUsername);
         edtEmail = view.findViewById(R.id.edtEmail);
         edtFirstname = view.findViewById(R.id.edtFirstname);
@@ -65,7 +67,11 @@ public class BrainUpdateProfileFragment extends BaseFragment implements View.OnC
 
         btnSubmit.setOnClickListener(this);
 
-        mTxtTitle.setText("");
+        mTxtTitle.setText(mResourceUtil.getString(R.string.update_profile));
+        edtUsername.setText("" + mSharedPrefsHelper.getUsername());
+        edtEmail.setText("" + mSharedPrefsHelper.get("email"));
+        edtFirstname.setText("" + mSharedPrefsHelper.get("firstname"));
+        edtLastname.setText("" + mSharedPrefsHelper.get("lastname"));
     }
 
     @Override
@@ -74,43 +80,68 @@ public class BrainUpdateProfileFragment extends BaseFragment implements View.OnC
             case R.id.btnSubmit:
                 checkValidation();
                 break;
-
-            case R.id.imgBack:
-                break;
         }
     }
 
     private void checkValidation() {
-        /*if (mCommonUtil.isNullString("" + edtUsername.getText().toString().trim())) {
-            ToastUtil.show(RegisterActivity.this, mResourceUtil.getString(R.string.toast_username_empty));
+        if (mCommonUtil.isNullString("" + edtUsername.getText().toString().trim())) {
+            ToastUtil.show(getActivity(), mResourceUtil.getString(R.string.toast_username_empty));
 
         } else if (mCommonUtil.isNullString("" + edtEmail.getText().toString().trim())) {
-            ToastUtil.show(RegisterActivity.this, mResourceUtil.getString(R.string.toast_email_empty));
+            ToastUtil.show(getActivity(), mResourceUtil.getString(R.string.toast_email_empty));
 
         } else if (mCommonUtil.isNullString("" + edtFirstname.getText().toString().trim())) {
-            ToastUtil.show(RegisterActivity.this, mResourceUtil.getString(R.string.toast_firstname_empty));
+            ToastUtil.show(getActivity(), mResourceUtil.getString(R.string.toast_firstname_empty));
 
         } else if (mCommonUtil.isNullString("" + edtLastname.getText().toString().trim())) {
-            ToastUtil.show(RegisterActivity.this, mResourceUtil.getString(R.string.toast_lastname_empty));
-
-        } else if (mCommonUtil.isNullString("" + edtPassword.getText().toString().trim())) {
-            ToastUtil.show(RegisterActivity.this, mResourceUtil.getString(R.string.toast_password_empty));
+            ToastUtil.show(getActivity(), mResourceUtil.getString(R.string.toast_lastname_empty));
 
         } else {
-            callRegistrationApi();
-        }*/
+            callUpdateProfileApi();
+        }
     }
 
-    private void callRegistrationApi() {
-        /*Log.i(TAG, "callLoginApi");
-        if (!mCommonUtil.isInternetAvailable(RegisterActivity.this)) {
+    private void callUpdateProfileApi() {
+        Log.i(TAG, "callLoginApi");
+        if (!mCommonUtil.isInternetAvailable(getActivity())) {
             return;
-        }*/
+        }
 
-        /*// Now call web service using retrofit
-        mNetworkService.doUserSignIn(RegisterActivity.this,
-                RequestParam.paramUserLogin("" + mEdtEmail.getText().toString(), "" + mEdtPassword.getText().toString()),
+        // Now call web service using retrofit
+        mNetworkService.doUpdateProfile(getActivity(),
+                RequestParam.paramUserRegister("" + edtUsername.getText().toString(),
+                        "" + edtFirstname.getText().toString(),
+                        "" + edtLastname.getText().toString()),
                 false,
-                this);*/
+                this);
+    }
+
+    @Override
+    public void onSuccess(Object networkResponse) {
+        if (networkResponse instanceof UpdateProfileModel) {
+
+            UpdateProfileModel responseModel = (UpdateProfileModel) networkResponse;
+
+            if (responseModel != null) {
+                Toast.makeText(
+                        getActivity(),
+                        R.string.success,
+                        Toast.LENGTH_LONG
+                ).show();
+
+                mSharedPrefsHelper.saveLoginData(responseModel.getUsername(),
+                        responseModel.getFirstname(), responseModel.getLastname(), responseModel.getEmail());
+
+                mActivityContext.onBackPressed();
+            }
+
+        } else {
+            ToastUtil.show(getActivity(), mResourceUtil.getString(R.string.toast_something_wrong));
+        }
+    }
+
+    @Override
+    public void onError(NetworkError networkError) {
+        ToastUtil.show(getActivity(), "" + networkError.getMessage());
     }
 }

@@ -124,13 +124,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void callLoginApi() {
-        Log.i(TAG, "callLoginApi");
         if (!mCommonUtil.isInternetAvailable(LoginActivity.this)) {
             return;
         }
 
         // Now call web service using retrofit
-        mNetworkService.doUserSignIn(LoginActivity.this,
+        mNetworkService.doUserLogin(LoginActivity.this,
                 RequestParam.paramUserLogin("" + mEdtEmail.getText().toString(), "" + mEdtPassword.getText().toString()),
                 false,
                 this);

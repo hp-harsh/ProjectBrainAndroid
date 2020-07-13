@@ -27,14 +27,14 @@
             android:id="@+id/edtEmail"
             style="@style/UiEditText"
             android:hint="Email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edtPassword"
             style="@style/UiEditText"
             android:layout_marginTop="16dp"
             android:hint="Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSubmit"

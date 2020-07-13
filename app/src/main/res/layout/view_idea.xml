@@ -10,7 +10,7 @@
         android:id="@+id/txtTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
+        android:textSize="20sp"
         tools:text="Title: Android Development"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"/>
@@ -38,11 +38,11 @@
         android:id="@+id/txtPostedBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="right"
         android:padding="8dp"
-        android:textSize="18sp"
-        tools:text="Posted By: Human"
-        android:visibility="gone"/>
+        android:textSize="16sp"
+        tools:text="Author: Harsh"
+        android:visibility="visible"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,34 +55,34 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/imgCite"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/ic_new_idea"
             android:background="@drawable/view_circle_border"
             android:scaleType="fitCenter"
-            android:padding="10dp"
+            android:padding="5dp"
             android:layout_gravity="right"
             android:layout_marginRight="8dp"/>
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/imgTodo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/ic_todo"
             android:background="@drawable/view_circle_border"
             android:scaleType="fitCenter"
-            android:padding="10dp"
+            android:padding="5dp"
             android:layout_gravity="right"
             android:layout_marginRight="8dp"/>
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/imgFollow"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/ic_follow"
             android:background="@drawable/view_circle_border"
             android:scaleType="fitCenter"
-            android:padding="10dp"
+            android:padding="5dp"
             android:layout_gravity="right"
             android:layout_marginRight="8dp"/>
     </LinearLayout>
@@ -90,6 +90,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:background="@color/colorPrimary"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="24dp"
