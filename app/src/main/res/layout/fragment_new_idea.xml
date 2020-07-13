@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_main" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtTitle"
+                style="@style/UiEditText"
+                android:hint="Title"
+                android:inputType="text" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtContext"
+                style="@style/UiEditText"
+                android:hint="Context"
+                android:inputType="text|textMultiLine"
+                android:layout_marginTop="16dp"
+                android:lines="3"
+                android:gravity="top|left"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtContent"
+                style="@style/UiEditText"
+                android:hint="Content"
+                android:inputType="text|textMultiLine"
+                android:lines="6"
+                android:layout_marginTop="16dp"
+                android:gravity="top|left"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSubmit"
+                style="@style/UiEditText"
+                android:background="@drawable/view_border_filled"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/white"
+                android:text="Submit"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

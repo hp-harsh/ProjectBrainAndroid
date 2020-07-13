@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import hp.harsh.projectbrain.models.LoginModel;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
@@ -26,6 +27,25 @@ public class NetworkService {
     @Inject
     public NetworkService(ApiService apiService) {
         this.apiService = apiService;
+    }
+
+    public void doUserSignIn(Context context, Map<String, String> options,
+                             boolean isSilentProgress, NetworkCallback callback) {
+
+        if (!isSilentProgress) {
+            initProgressDialog(context);
+        }
+
+        apiService.getUserLogin(options)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Function<Throwable, ObservableSource<? extends LoginModel>>() {
+                    @Override
+                    public ObservableSource<? extends LoginModel> apply(Throwable throwable) throws Exception {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(getObserver(callback, isSilentProgress));
     }
 
     private Observer<Object> getObserver(final NetworkCallback callback, final boolean isSilentProgress) {

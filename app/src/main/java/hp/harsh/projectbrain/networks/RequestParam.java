@@ -16,4 +16,12 @@ public class RequestParam {
         Map<String, String> requestBody = new HashMap<>();
         return requestBody;
     }
+
+    public static Map<String, String> paramUserLogin(String email, String password) {
+
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("email", email.trim());
+        requestBody.put("password", password.trim());
+        return requestBody;
+    }
 }

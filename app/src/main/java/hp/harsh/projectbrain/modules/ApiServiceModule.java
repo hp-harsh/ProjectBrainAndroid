@@ -16,7 +16,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 @Module(includes = NetworkModule.class)
 public class ApiServiceModule {
 
-    private String BASE_URL = "";
+    private String BASE_URL = "http://192.168.0.158:8080/";
 
     @Provides
     @ApiServiceScope

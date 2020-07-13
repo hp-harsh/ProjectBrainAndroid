@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:background="@color/white">
+
+    <include layout="@layout/toolbar_back" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtUsername"
+                style="@style/UiEditText"
+                android:hint="Username"
+                android:inputType="textPersonName"
+                android:enabled="false"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtEmail"
+                style="@style/UiEditText"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:layout_marginTop="16dp"
+                android:enabled="false"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtFirstname"
+                style="@style/UiEditText"
+                android:hint="Firstname"
+                android:inputType="textPersonName"
+                android:layout_marginTop="16dp"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtLastname"
+                style="@style/UiEditText"
+                android:hint="Lastname"
+                android:inputType="textPersonName"
+                android:layout_marginTop="16dp"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtPassword"
+                style="@style/UiEditText"
+                android:layout_marginTop="16dp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:visibility="gone"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSubmit"
+                style="@style/UiEditText"
+                android:background="@drawable/view_border_filled"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/white"
+                android:text="Submit"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

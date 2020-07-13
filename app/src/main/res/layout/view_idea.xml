@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/transparent">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        tools:text="Title: Android Development"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtContext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        tools:text="Context: Android Development for Final Semester"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="5dp"
+        tools:text="Content: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \n\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtPostedBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="8dp"
+        android:textSize="18sp"
+        tools:text="Posted By: Human"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="8dp"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:visibility="visible">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/imgCite"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_new_idea"
+            android:background="@drawable/view_circle_border"
+            android:scaleType="fitCenter"
+            android:padding="10dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="8dp"/>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/imgTodo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_todo"
+            android:background="@drawable/view_circle_border"
+            android:scaleType="fitCenter"
+            android:padding="10dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="8dp"/>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/imgFollow"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_follow"
+            android:background="@drawable/view_circle_border"
+            android:scaleType="fitCenter"
+            android:padding="10dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="8dp"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="16dp"/>
+</LinearLayout>

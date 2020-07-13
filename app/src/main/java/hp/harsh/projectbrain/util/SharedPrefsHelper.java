@@ -20,6 +20,17 @@ public class SharedPrefsHelper {
         mEditor = mSharedPreferences.edit();
     }
 
+    public void saveLoginData(String username, String firstname, String lastname, String email) {
+        set("username", "" + username);
+        set("firstname", "" + firstname);
+        set("lastname", "" + lastname);
+        set("email", "" + email);
+    }
+
+    public String getUsername() {
+        return "" + mSharedPreferences.getString("username","");
+    }
+
     public String get(String key) {
         return "" + mSharedPreferences.getString("" + key,"");
     }

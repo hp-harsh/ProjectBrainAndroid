@@ -50,7 +50,15 @@ public class MainActivity extends AppCompatActivity implements SplashInterface {
 
     @Override
     public void onSplashTimeOver() {
-
+        // If user is already logged in, redirect to dashboard
+        if (!(mCommonUtil.isNullString(mSharedPreferenceHelper.getUsername()))) {
+            startActivity(new Intent(MainActivity.this, HomeActivity.class));
+            finish();
+        } else {
+            // If user is not logged in, redirect to login page
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
+        }
     }
 
     @Override
