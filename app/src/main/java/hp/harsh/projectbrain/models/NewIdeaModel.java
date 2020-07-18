@@ -10,6 +10,9 @@ public class NewIdeaModel {
     @SerializedName("id")
     @Expose
     private Integer id;
+    @SerializedName("originalId")
+    @Expose
+    private String originalId;
     @SerializedName("title")
     @Expose
     private String title;
@@ -25,20 +28,24 @@ public class NewIdeaModel {
 
     /**
      * No args constructor for use in serialization
+     *
      */
     public NewIdeaModel() {
     }
 
     /**
+     *
      * @param author
      * @param context
      * @param id
+     * @param originalId
      * @param title
      * @param content
      */
-    public NewIdeaModel(Integer id, String title, String context, String content, Author author) {
+    public NewIdeaModel(Integer id, String originalId, String title, String context, String content, Author author) {
         super();
         this.id = id;
+        this.originalId = originalId;
         this.title = title;
         this.context = context;
         this.content = content;
@@ -51,6 +58,14 @@ public class NewIdeaModel {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getOriginalId() {
+        return originalId;
+    }
+
+    public void setOriginalId(String originalId) {
+        this.originalId = originalId;
     }
 
     public String getTitle() {
@@ -108,11 +123,13 @@ public class NewIdeaModel {
 
         /**
          * No args constructor for use in serialization
+         *
          */
         public Author() {
         }
 
         /**
+         *
          * @param firstname
          * @param followers
          * @param todos
@@ -177,7 +194,5 @@ public class NewIdeaModel {
         public void setTodos(List<Object> todos) {
             this.todos = todos;
         }
-
     }
-
 }

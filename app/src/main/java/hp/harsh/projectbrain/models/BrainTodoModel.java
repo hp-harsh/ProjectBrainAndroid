@@ -132,6 +132,9 @@ public class BrainTodoModel {
         @SerializedName("id")
         @Expose
         private Integer id;
+        @SerializedName("originalId")
+        @Expose
+        private String originalId;
         @SerializedName("title")
         @Expose
         private String title;
@@ -158,9 +161,10 @@ public class BrainTodoModel {
          * @param title
          * @param content
          */
-        public Datum(Integer id, String title, String context, String content, Author author) {
+        public Datum(Integer id, String originalId, String title, String context, String content, Author author) {
             super();
             this.id = id;
+            this.originalId = originalId;
             this.title = title;
             this.context = context;
             this.content = content;
@@ -173,6 +177,14 @@ public class BrainTodoModel {
 
         public void setId(Integer id) {
             this.id = id;
+        }
+
+        public String getOriginalId() {
+            return originalId;
+        }
+
+        public void setOriginalId(String originalId) {
+            this.originalId = originalId;
         }
 
         public String getTitle() {

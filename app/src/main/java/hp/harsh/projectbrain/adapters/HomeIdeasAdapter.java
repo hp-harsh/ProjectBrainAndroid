@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import hp.harsh.projectbrain.R;
+import hp.harsh.projectbrain.activities.HomeActivity;
+import hp.harsh.projectbrain.fragments.CiteIdeaFragment;
 import hp.harsh.projectbrain.models.BrainIdeaModel;
 import hp.harsh.projectbrain.models.FollowModel;
 import hp.harsh.projectbrain.models.TodoModel;
@@ -74,11 +76,9 @@ public class HomeIdeasAdapter extends RecyclerView.Adapter<HomeIdeasAdapter.View
         holder.imgCite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(
-                        context,
-                        "Pending: It will be available in phase 2",
-                        Toast.LENGTH_LONG
-                ).show();
+                ((HomeActivity) context).addFragment(CiteIdeaFragment
+                        .getInstance("" + userIdeaModel.getId()
+                                , "" + userIdeaModel.getTitle()));
             }
         });
 
@@ -147,7 +147,7 @@ public class HomeIdeasAdapter extends RecyclerView.Adapter<HomeIdeasAdapter.View
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.txtTitle = (TextView) itemView.findViewById(R.id.txtTitle);
+            this.txtTitle = (TextView) itemView.findViewById(R.id.txtIdeaTitle);
             this.txtContext = (TextView) itemView.findViewById(R.id.txtContext);
             this.txtContent = (TextView) itemView.findViewById(R.id.txtContent);
             this.txtPostedBy = (TextView) itemView.findViewById(R.id.txtPostedBy);

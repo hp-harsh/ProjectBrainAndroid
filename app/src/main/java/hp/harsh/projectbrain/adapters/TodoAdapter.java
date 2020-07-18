@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import hp.harsh.projectbrain.R;
+import hp.harsh.projectbrain.activities.HomeActivity;
+import hp.harsh.projectbrain.fragments.CiteIdeaFragment;
 import hp.harsh.projectbrain.models.BrainTodoModel;
 import hp.harsh.projectbrain.models.FollowModel;
 import hp.harsh.projectbrain.networks.NetworkCallback;
@@ -66,9 +68,16 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> im
         holder.txtContent.setText("Content: " + userIdeaModel.getContent());
         holder.txtPostedBy.setText("Author: " + userIdeaModel.getAuthor().getUsername());
 
-        holder.imgCite.setVisibility(View.GONE);
         holder.imgTodo.setVisibility(View.GONE);
 
+        holder.imgCite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((HomeActivity) context).addFragment(CiteIdeaFragment
+                        .getInstance("" + userIdeaModel.getId()
+                                , "" + userIdeaModel.getTitle()));
+            }
+        });
 
         holder.imgFollow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +127,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> im
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.txtTitle = (TextView) itemView.findViewById(R.id.txtTitle);
+            this.txtTitle = (TextView) itemView.findViewById(R.id.txtIdeaTitle);
             this.txtContext = (TextView) itemView.findViewById(R.id.txtContext);
             this.txtContent = (TextView) itemView.findViewById(R.id.txtContent);
             this.txtPostedBy = (TextView) itemView.findViewById(R.id.txtPostedBy);

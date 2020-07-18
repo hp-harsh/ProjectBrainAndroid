@@ -127,7 +127,7 @@ public class IdeasAdapter extends RecyclerView.Adapter<IdeasAdapter.ViewHolder> 
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.txtTitle = (TextView) itemView.findViewById(R.id.txtTitle);
+            this.txtTitle = (TextView) itemView.findViewById(R.id.txtIdeaTitle);
             this.txtContext = (TextView) itemView.findViewById(R.id.txtContext);
             this.txtContent = (TextView) itemView.findViewById(R.id.txtContent);
             this.txtPostedBy = (TextView) itemView.findViewById(R.id.txtPostedBy);
@@ -147,105 +147,4 @@ public class IdeasAdapter extends RecyclerView.Adapter<IdeasAdapter.ViewHolder> 
                 false,
                 this);
     }
-
-    /*private void callApiForToDo(String ideaId) {
-        if (!InternetUtil.isInternetAvailable(context)) {
-            return;
-        }
-
-        String url = MyApplication.getInstance().getBaseUrl() + "relation/save_todo_brain";
-
-        ToDoForm toDoForm = new ToDoForm();
-        toDoForm.setUsername("" + username);
-        toDoForm.setIdeaId("" + ideaId);
-
-        Gson gson = new GsonBuilder().create();
-        JSONObject request = null;
-        try {
-            request = new JSONObject(gson.toJson(toDoForm));
-
-            Log.i("Request","Request: " + request);
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, request, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-
-                    Log.i("onResponse", "" + response.toString());
-
-                    Toast.makeText(
-                            context,
-                            "Saved in Todo list successfully",
-                            Toast.LENGTH_LONG
-                    ).show();
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            }) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    final Map<String, String> headers = new HashMap<>();
-                    headers.put("Content-Type", "application/json");
-                    return headers;
-                }
-            };
-
-            MyApplication.getInstance().getRequestQueue().add(jsonObjectRequest);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void callApiForFollowUser(String toBeFollowedUsername) {
-        if (!InternetUtil.isInternetAvailable(context)) {
-            return;
-        }
-
-        String url = MyApplication.getInstance().getBaseUrl() + "brain/follow_brain";
-
-        FollowForm followForm = new FollowForm();
-        followForm.setUsername("" + username);
-        followForm.setUsernameToBeFollowed("" + toBeFollowedUsername);
-
-        Gson gson = new GsonBuilder().create();
-        JSONObject request = null;
-        try {
-            request = new JSONObject(gson.toJson(followForm));
-
-            Log.i("Request","Request: " + request);
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, request, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-
-                    Log.i("onResponse", "" + response.toString());
-
-                    Toast.makeText(
-                            context,
-                            "Followed successfully",
-                            Toast.LENGTH_LONG
-                    ).show();
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            }) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    final Map<String, String> headers = new HashMap<>();
-                    headers.put("Content-Type", "application/json");
-                    return headers;
-                }
-            };
-
-            MyApplication.getInstance().getRequestQueue().add(jsonObjectRequest);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }*/
-
 }

@@ -57,6 +57,18 @@ public class RequestParam {
         return requestBody;
     }
 
+    public static Map<String, String> paramCiteIdea(String originalId, String username, String title,
+                                                   String context, String content) {
+
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("originalId", originalId.trim());
+        requestBody.put("username", username.trim());
+        requestBody.put("title", title.trim());
+        requestBody.put("context", context.trim());
+        requestBody.put("content", content.trim());
+        return requestBody;
+    }
+
     public static Map<String, String> paramFollow(String username, String usernameToBeFollowed) {
 
         Map<String, String> requestBody = new HashMap<>();

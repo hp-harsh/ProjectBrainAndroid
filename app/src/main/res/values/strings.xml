@@ -38,4 +38,6 @@
     <string name="profile">Profile</string>
     <string name="no_data_found">No data found</string>
     <string name="other_username_empty">Enter other username</string>
+    <string name="idea">Idea</string>
+    <string name="cite_idea">Cite Idea</string>
 </resources>

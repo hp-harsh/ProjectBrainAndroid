@@ -18,6 +18,7 @@ import hp.harsh.projectbrain.components.HomeActivityComponent;
 import hp.harsh.projectbrain.fragments.BrainIdeasFragment;
 import hp.harsh.projectbrain.fragments.BrainTodoFragment;
 import hp.harsh.projectbrain.fragments.BrainUpdateProfileFragment;
+import hp.harsh.projectbrain.fragments.CiteIdeaFragment;
 import hp.harsh.projectbrain.fragments.IdeasFragment;
 import hp.harsh.projectbrain.fragments.NewIdeaFragment;
 import hp.harsh.projectbrain.fragments.ProfileFragment;
@@ -49,6 +50,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private ImageButton imgProfile;
     private ImageButton imgNewIdea;
+    private ImageButton imgSearch;
     private ImageButton imgHome;
 
     @Override
@@ -71,10 +73,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private void init() {
         imgProfile = findViewById(R.id.imgProfile);
         imgNewIdea = findViewById(R.id.imgNewIdea);
+        imgSearch = findViewById(R.id.imgSearch);
         imgHome = findViewById(R.id.imgHome);
 
         imgProfile.setOnClickListener(this);
         imgNewIdea.setOnClickListener(this);
+        imgSearch.setOnClickListener(this);
         imgHome.setOnClickListener(this);
 
         replaceFragment(IdeasFragment.getInstance());
@@ -86,9 +90,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         if (fragment instanceof BrainIdeasFragment ||
                 fragment instanceof BrainTodoFragment ||
-                fragment instanceof BrainUpdateProfileFragment) {
+                fragment instanceof BrainUpdateProfileFragment ||
+                fragment instanceof CiteIdeaFragment) {
             removeFragment(fragment);
-        } else if (fragment instanceof  IdeasFragment) {
+        } else if (fragment instanceof IdeasFragment) {
             // Quit app if user double tap back pressed
             mRxUtil.quitApp(HomeActivity.this);
         } else {
@@ -104,6 +109,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.imgNewIdea:
                 replaceFragment(NewIdeaFragment.getInstance());
+                break;
+            case R.id.imgSearch:
                 break;
             case R.id.imgProfile:
                 replaceFragment(ProfileFragment.getInstance());
