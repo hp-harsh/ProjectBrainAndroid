@@ -22,6 +22,7 @@ import hp.harsh.projectbrain.fragments.CiteIdeaFragment;
 import hp.harsh.projectbrain.fragments.IdeasFragment;
 import hp.harsh.projectbrain.fragments.NewIdeaFragment;
 import hp.harsh.projectbrain.fragments.ProfileFragment;
+import hp.harsh.projectbrain.fragments.SearchFragment;
 import hp.harsh.projectbrain.modules.HomeActivityModule;
 import hp.harsh.projectbrain.util.CommonUtil;
 import hp.harsh.projectbrain.util.RxUtil;
@@ -111,6 +112,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 replaceFragment(NewIdeaFragment.getInstance());
                 break;
             case R.id.imgSearch:
+                replaceFragment(SearchFragment.getInstance());
                 break;
             case R.id.imgProfile:
                 replaceFragment(ProfileFragment.getInstance());

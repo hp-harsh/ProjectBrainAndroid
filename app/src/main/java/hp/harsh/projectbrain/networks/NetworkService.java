@@ -113,6 +113,25 @@ public class NetworkService {
                 .subscribe(getObserver(callback, isSilentProgress));
     }
 
+    public void doIdeaByTitle(Context context, String title,
+                            boolean isSilentProgress, NetworkCallback callback) {
+
+        if (!isSilentProgress) {
+            initProgressDialog(context);
+        }
+
+        apiService.getIdeasByTitle(title)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Function<Throwable, ObservableSource<? extends BrainIdeaModel>>() {
+                    @Override
+                    public ObservableSource<? extends BrainIdeaModel> apply(Throwable throwable) throws Exception {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(getObserver(callback, isSilentProgress));
+    }
+
     public void doBrainIdea(Context context, String username,
                                  boolean isSilentProgress, NetworkCallback callback) {
 

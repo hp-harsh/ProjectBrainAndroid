@@ -40,4 +40,7 @@
     <string name="other_username_empty">Enter other username</string>
     <string name="idea">Idea</string>
     <string name="cite_idea">Cite Idea</string>
+    <string name="search_by_title">Search by Title</string>
+    <string name="search">Search</string>
+    <string name="toast_title_required">Title is required</string>
 </resources>

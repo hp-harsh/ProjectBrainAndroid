@@ -58,4 +58,7 @@ public interface ApiService {
     @GET("" + Constants.BRAIN_SINGLE_IDEA)
     Observable<NewIdeaModel> getIdea(@Query("id") String id);
 
+    @GET("" + Constants.BRAIN_SEARCH_IDEA_TITLE)
+    Observable<BrainIdeaModel> getIdeasByTitle(@Path("title") String title);
+
 }

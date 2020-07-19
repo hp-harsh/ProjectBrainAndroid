@@ -14,10 +14,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 import hp.harsh.projectbrain.R;
+import hp.harsh.projectbrain.adapters.HomeIdeasAdapter;
 import hp.harsh.projectbrain.models.BrainIdeaModel;
 import hp.harsh.projectbrain.networks.NetworkCallback;
 import hp.harsh.projectbrain.networks.NetworkError;
@@ -28,20 +31,15 @@ public class SearchFragment extends BaseFragment implements NetworkCallback, Vie
 
     private TextView mTxtTitle;
     private TextView txtNoData;
-    private TextView txtIdeaTitle;
-    private TextView txtContext;
-    private TextView txtContent;
-    private TextView txtPostedBy;
-
-    private LinearLayout lnrData;
 
     private EditText edtSearch;
+
+    private RecyclerView recyclerView;
+
+    private HomeIdeasAdapter ideasAdapter;
     private ArrayList<BrainIdeaModel.Datum> arrayBrainIdeas = new ArrayList<>();
 
     private ImageView imgSearch;
-    private ImageView imgCite;
-    private ImageView imgTodo;
-    private ImageView imgFollow;
 
     private boolean isFirstTime = true;
 
@@ -66,41 +64,47 @@ public class SearchFragment extends BaseFragment implements NetworkCallback, Vie
     private void init(View view) {
         mTxtTitle = view.findViewById(R.id.txtTitle);
         txtNoData = view.findViewById(R.id.txtNoData);
-        txtIdeaTitle = view.findViewById(R.id.txtIdeaTitle);
-        txtContext = view.findViewById(R.id.txtContext);
-        txtContent = view.findViewById(R.id.txtContent);
-        txtPostedBy = view.findViewById(R.id.txtPostedBy);
 
         edtSearch = view.findViewById(R.id.edtSearch);
 
         imgSearch = view.findViewById(R.id.imgSearch);
-        imgCite = view.findViewById(R.id.imgCite);
-        imgTodo = view.findViewById(R.id.imgTodo);
-        imgFollow = view.findViewById(R.id.imgFollow);
 
-        mTxtTitle.setText(mResourceUtil.getString(R.string.home));
+        recyclerView = view.findViewById(R.id.recyclerView);
+
+        mTxtTitle.setText(mResourceUtil.getString(R.string.search));
 
         edtSearch.addTextChangedListener(this);
         imgSearch.setOnClickListener(this);
+
+        // Default No data
+        recyclerView.setVisibility(View.GONE);
+        txtNoData.setVisibility(View.VISIBLE);
+
+        initList();
     }
 
-    private void callBrainIdeaByUsernameApi(String username) {
+    private void initList() {
+        ideasAdapter = new HomeIdeasAdapter(getActivity(), arrayBrainIdeas, mSharedPrefsHelper.getUsername(),
+                mCommonUtil, mNetworkService);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(ideasAdapter);
+    }
+
+    private void callBrainIdeaByUsernameApi(String title) {
         Log.i(TAG, "callLoginApi");
         if (!mCommonUtil.isInternetAvailable(getActivity())) {
             return;
         }
 
-        if (mCommonUtil.isNullString("" + username.trim())) {
-            ToastUtil.show(getActivity(), "" + mResourceUtil.getString(R.string.toast_username_empty));
-            return;
-        } else if (username.equals("" + mSharedPrefsHelper.getUsername().trim())) {
-            ToastUtil.show(getActivity(), getString(R.string.other_username_empty));
+        if (mCommonUtil.isNullString("" + title.trim())) {
+            ToastUtil.show(getActivity(), "" + mResourceUtil.getString(R.string.toast_title_required));
             return;
         }
 
         // Now call web service using retrofit
-        mNetworkService.doBrainIdea(getActivity(),
-                username,
+        mNetworkService.doIdeaByTitle(getActivity(),
+                title,
                 false,
                 this);
     }
@@ -119,11 +123,15 @@ public class SearchFragment extends BaseFragment implements NetworkCallback, Vie
 
             if (arrayBrainIdeas.size() == 0) {
                 txtNoData.setVisibility(View.VISIBLE);
-                lnrData.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.GONE);
             } else {
                 txtNoData.setVisibility(View.GONE);
-                lnrData.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.VISIBLE);
             }
+
+            initList();
+
+            ideasAdapter.notifyDataSetChanged();
 
         } else {
             ToastUtil.show(getActivity(), mResourceUtil.getString(R.string.toast_something_wrong));
@@ -158,7 +166,7 @@ public class SearchFragment extends BaseFragment implements NetworkCallback, Vie
     public void afterTextChanged(Editable s) {
         if (!isFirstTime && s.toString().trim().length() == 0) {
             txtNoData.setVisibility(View.VISIBLE);
-            lnrData.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
         }
 
         isFirstTime = false;
