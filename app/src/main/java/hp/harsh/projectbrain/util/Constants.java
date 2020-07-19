@@ -12,4 +12,5 @@ public class Constants {
     public static final String BRAIN_FOLLOW = "brain/follow";
     public static final String BRAIN_TODO = "assign/todo";
     public static final String BRAIN_IDEA_DELETE = "idea/remove";
+    public static final String BRAIN_SINGLE_IDEA = "idea";
 }

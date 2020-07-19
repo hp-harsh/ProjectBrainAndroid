@@ -223,6 +223,24 @@ public class NetworkService {
                 .subscribe(getObserver(callback, isSilentProgress));
     }
 
+    public void doGetIdea(Context context, String id, boolean isSilentProgress, NetworkCallback callback) {
+
+        if (!isSilentProgress) {
+            initProgressDialog(context);
+        }
+
+        apiService.getIdea("" + id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Function<Throwable, ObservableSource<? extends NewIdeaModel>>() {
+                    @Override
+                    public ObservableSource<? extends NewIdeaModel> apply(Throwable throwable) throws Exception {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(getObserver(callback, isSilentProgress));
+    }
+
 
     private Observer<Object> getObserver(final NetworkCallback callback, final boolean isSilentProgress) {
         return new Observer<Object>() {

@@ -25,6 +25,7 @@ import java.util.Map;
 import hp.harsh.projectbrain.R;
 import hp.harsh.projectbrain.activities.HomeActivity;
 import hp.harsh.projectbrain.fragments.CiteIdeaFragment;
+import hp.harsh.projectbrain.fragments.SingleIdeaFragment;
 import hp.harsh.projectbrain.models.BrainTodoModel;
 import hp.harsh.projectbrain.models.FollowModel;
 import hp.harsh.projectbrain.networks.NetworkCallback;
@@ -69,6 +70,20 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> im
         holder.txtPostedBy.setText("Author: " + userIdeaModel.getAuthor().getUsername());
 
         holder.imgTodo.setVisibility(View.GONE);
+
+        if (!("" + userIdeaModel.getOriginalId()).trim().equals("null")) {
+            holder.txtContext.setTextColor(((HomeActivity) context).getColor(R.color.citeColor));
+        }
+
+        holder.txtContext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!("" + userIdeaModel.getOriginalId()).trim().equals("null")) {
+                    ((HomeActivity) context).addFragment(SingleIdeaFragment
+                            .getInstance("" + userIdeaModel.getOriginalId()));
+                }
+            }
+        });
 
         holder.imgCite.setOnClickListener(new View.OnClickListener() {
             @Override

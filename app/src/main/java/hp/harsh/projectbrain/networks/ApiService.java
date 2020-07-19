@@ -55,4 +55,7 @@ public interface ApiService {
     @DELETE("" + Constants.BRAIN_IDEA_DELETE)
     Observable<IdeaRemovedModel> getIdeaRemove(@Query("id") String id);
 
+    @GET("" + Constants.BRAIN_SINGLE_IDEA)
+    Observable<NewIdeaModel> getIdea(@Query("id") String id);
+
 }

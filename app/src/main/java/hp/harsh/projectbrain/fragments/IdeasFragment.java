@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import hp.harsh.projectbrain.R;
 import hp.harsh.projectbrain.adapters.HomeIdeasAdapter;
 import hp.harsh.projectbrain.adapters.IdeasAdapter;
+import hp.harsh.projectbrain.events.OnCiteIdeaAdded;
 import hp.harsh.projectbrain.events.OnIdeaRemoved;
 import hp.harsh.projectbrain.models.BrainIdeaModel;
 import hp.harsh.projectbrain.networks.NetworkCallback;
@@ -49,6 +50,8 @@ public class IdeasFragment extends BaseFragment implements NetworkCallback, View
 
     private boolean isFirstTime = true;
 
+    private final CompositeDisposable mDisposables = new CompositeDisposable();
+
     public static IdeasFragment getInstance() {
         IdeasFragment frag = new IdeasFragment();
         return frag;
@@ -67,6 +70,12 @@ public class IdeasFragment extends BaseFragment implements NetworkCallback, View
         init(view);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mDisposables.clear(); // do not send event after fragment has been destroyed
+    }
+
     private void init(View view) {
         mTxtTitle = view.findViewById(R.id.txtTitle);
         txtNoData = view.findViewById(R.id.txtNoData);
@@ -81,11 +90,35 @@ public class IdeasFragment extends BaseFragment implements NetworkCallback, View
 
 
         initList();
+        initRxBusListener();
 
         callBrainIdeaApi();
 
         edtSearch.addTextChangedListener(this);
         imgSearch.setOnClickListener(this);
+    }
+
+    private void initRxBusListener() {
+        mDisposables.add(mRxBus
+                .toObservable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object object) throws Exception {
+
+                        if (object instanceof OnCiteIdeaAdded) {
+                            OnCiteIdeaAdded onCiteIdeaAdded = (OnCiteIdeaAdded) object;
+
+                            // Update respected data
+                            if (!mCommonUtil.isNullString(edtSearch.getText().toString())) {
+                                callBrainIdeaByUsernameApi("" + edtSearch.getText().toString().trim());
+                            } else {
+                                callBrainIdeaApi();
+                            }
+                        }
+                    }
+                }));
     }
 
     private void initList() {

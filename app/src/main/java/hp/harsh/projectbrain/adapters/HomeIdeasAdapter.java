@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import hp.harsh.projectbrain.R;
 import hp.harsh.projectbrain.activities.HomeActivity;
 import hp.harsh.projectbrain.fragments.CiteIdeaFragment;
+import hp.harsh.projectbrain.fragments.SingleIdeaFragment;
 import hp.harsh.projectbrain.models.BrainIdeaModel;
 import hp.harsh.projectbrain.models.FollowModel;
 import hp.harsh.projectbrain.models.TodoModel;
@@ -72,6 +73,20 @@ public class HomeIdeasAdapter extends RecyclerView.Adapter<HomeIdeasAdapter.View
 
             holder.txtPostedBy.setText("Author: " + userIdeaModel.getAuthor().getUsername());
         }
+
+        if (!("" + userIdeaModel.getOriginalId()).trim().equals("null")) {
+            holder.txtContext.setTextColor(((HomeActivity) context).getColor(R.color.citeColor));
+        }
+
+        holder.txtContext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!("" + userIdeaModel.getOriginalId()).trim().equals("null")) {
+                    ((HomeActivity) context).addFragment(SingleIdeaFragment
+                            .getInstance("" + userIdeaModel.getOriginalId()));
+                }
+            }
+        });
 
         holder.imgCite.setOnClickListener(new View.OnClickListener() {
             @Override

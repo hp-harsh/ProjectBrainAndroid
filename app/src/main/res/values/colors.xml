@@ -3,4 +3,5 @@
     <color name="colorPrimary">#125E6E</color>
     <color name="colorPrimaryDark">#125E6E</color>
     <color name="colorAccent">#125E6E</color>
+    <color name="citeColor">#00BCD4</color>
 </resources>

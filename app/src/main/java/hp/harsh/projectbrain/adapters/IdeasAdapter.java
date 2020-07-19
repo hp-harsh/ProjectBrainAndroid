@@ -22,7 +22,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import hp.harsh.projectbrain.R;
+import hp.harsh.projectbrain.activities.HomeActivity;
 import hp.harsh.projectbrain.events.OnIdeaRemoved;
+import hp.harsh.projectbrain.fragments.SingleIdeaFragment;
 import hp.harsh.projectbrain.models.BrainIdeaModel;
 import hp.harsh.projectbrain.models.FollowModel;
 import hp.harsh.projectbrain.models.IdeaRemovedModel;
@@ -70,6 +72,20 @@ public class IdeasAdapter extends RecyclerView.Adapter<IdeasAdapter.ViewHolder> 
         holder.txtTitle.setText("Title: " + userIdeaModel.getTitle());
         holder.txtContext.setText("Context: " + userIdeaModel.getContext());
         holder.txtContent.setText("Content: " + userIdeaModel.getContent());
+
+        if (!("" + userIdeaModel.getOriginalId()).trim().equals("null")) {
+            holder.txtContext.setTextColor(((HomeActivity) context).getColor(R.color.citeColor));
+        }
+
+        holder.txtContext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!("" + userIdeaModel.getOriginalId()).trim().equals("null")) {
+                    ((HomeActivity) context).addFragment(SingleIdeaFragment
+                            .getInstance("" + userIdeaModel.getOriginalId()));
+                }
+            }
+        });
 
         if (userIdeaModel.getAuthor().getUsername().equals("" + username)) {
             holder.txtPostedBy.setText("Author: You");

@@ -14,11 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import hp.harsh.projectbrain.R;
+import hp.harsh.projectbrain.events.OnCiteIdeaAdded;
 import hp.harsh.projectbrain.models.NewIdeaModel;
 import hp.harsh.projectbrain.networks.NetworkCallback;
 import hp.harsh.projectbrain.networks.NetworkError;
 import hp.harsh.projectbrain.networks.RequestParam;
 import hp.harsh.projectbrain.util.ToastUtil;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class CiteIdeaFragment extends BaseFragment implements View.OnClickListener, NetworkCallback {
     private static final String TAG = CiteIdeaFragment.class.getSimpleName();
@@ -69,7 +71,7 @@ public class CiteIdeaFragment extends BaseFragment implements View.OnClickListen
 
         edtContext.setText("" + originalContext);
         edtContext.setEnabled(false);
-        edtContext.setTextColor(mResourceUtil.getColor(R.color.colorPrimary));
+        edtContext.setTextColor(mResourceUtil.getColor(R.color.citeColor));
     }
 
     @Override
@@ -129,6 +131,12 @@ public class CiteIdeaFragment extends BaseFragment implements View.OnClickListen
                 edtTitle.setText("");
                 edtContext.setText("");
                 edtContent.setText("");
+
+                // Update feed
+                mRxBus.send(new OnCiteIdeaAdded());
+
+                // Remove current view
+                mActivityContext.onBackPressed();
             }
 
         } else {
